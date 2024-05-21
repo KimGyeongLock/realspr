@@ -1,6 +1,8 @@
 package com.thc.realspr.service.impl;
 
 import com.thc.realspr.domain.Tbuser;
+import com.thc.realspr.dto.TbuserDto;
+import com.thc.realspr.mapper.TbuserMapper;
 import com.thc.realspr.repository.TbuserRepository;
 import com.thc.realspr.service.TbuserService;
 import org.springframework.stereotype.Service;
@@ -12,12 +14,15 @@ import java.util.Map;
 public class TbuserServiceImpl implements TbuserService {
 
     private final TbuserRepository tbuserRepository;
+    private final TbuserMapper tbuserMapper;
     public TbuserServiceImpl(
             TbuserRepository tbuserRepository
+            ,TbuserMapper tbuserMapper
     ) {
         this.tbuserRepository = tbuserRepository;
+        this.tbuserMapper = tbuserMapper;
     }
-
+    /*
     public Map<String, Object> create(Map<String, Object> param){
         Map<String, Object> returnMap = new HashMap<String, Object>();
         System.out.println(param);
@@ -25,6 +30,10 @@ public class TbuserServiceImpl implements TbuserService {
         tbuserRepository.save(tbuser);
         returnMap.put("id", tbuser.getId());
         return returnMap;
+    }
+    */
+    public TbuserDto.TbuserAfterCreateDto create(TbuserDto.TbuserCreateDto param){
+        return tbuserRepository.save(param.toEntity()).toTbuserAfterCreateDto();
     }
     public Map<String, Object> update(Map<String, Object> param){
         Map<String, Object> returnMap = new HashMap<String, Object>();
@@ -44,6 +53,7 @@ public class TbuserServiceImpl implements TbuserService {
         returnMap.put("id", tbuser.getId());
         return returnMap;
     }
+    /*
     public Map<String, Object> get(String id){
         Map<String, Object> returnMap = new HashMap<String, Object>();
         System.out.println(id);
@@ -56,5 +66,12 @@ public class TbuserServiceImpl implements TbuserService {
         returnMap.put("phone", tbuser.getPhone());
 
         return returnMap;
+    }
+    */
+    public TbuserDto.TbuserSelectDto get(String id){
+        //System.out.println(id);
+        TbuserDto.TbuserSelectDto tbuserSelectDto = tbuserMapper.detail(id);
+        //
+        return tbuserSelectDto;
     }
 }
