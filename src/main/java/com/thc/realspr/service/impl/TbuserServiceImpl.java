@@ -31,10 +31,6 @@ public class TbuserServiceImpl implements TbuserService {
         returnMap.put("id", tbuser.getId());
         return returnMap;
     }
-    */
-    public TbuserDto.TbuserAfterCreateDto create(TbuserDto.TbuserCreateDto param){
-        return tbuserRepository.save(param.toEntity()).toTbuserAfterCreateDto();
-    }
     public Map<String, Object> update(Map<String, Object> param){
         Map<String, Object> returnMap = new HashMap<String, Object>();
         System.out.println(param);
@@ -52,6 +48,24 @@ public class TbuserServiceImpl implements TbuserService {
         tbuserRepository.save(tbuser);
         returnMap.put("id", tbuser.getId());
         return returnMap;
+    }
+    */
+    public TbuserDto.TbuserAfterCreateDto create(TbuserDto.TbuserCreateDto param){
+        return tbuserRepository.save(param.toEntity()).toTbuserAfterCreateDto();
+    }
+    public TbuserDto.TbuserAfterCreateDto update(TbuserDto.TbuserUpdateDto param){
+        System.out.println(param);
+        Tbuser tbuser = tbuserRepository.findById(param.getId()).orElseThrow(() -> new RuntimeException(""));
+        if(param.getName() != null) {
+            tbuser.setName(param.getName());
+        }
+        if(param.getNick() != null) {
+            tbuser.setNick(param.getNick());
+        }
+        if(param.getPhone() != null) {
+            tbuser.setPhone(param.getPhone());
+        }
+        return tbuserRepository.save(tbuser).toTbuserAfterCreateDto();
     }
     /*
     public Map<String, Object> get(String id){

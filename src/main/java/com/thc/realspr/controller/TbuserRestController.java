@@ -29,18 +29,21 @@ public class TbuserRestController {
         System.out.println(id);
         return tbuserService.get(id);
     }
-    */
-    @PostMapping("")
-    public ResponseEntity<TbuserDto.TbuserAfterCreateDto> create(@RequestBody TbuserDto.TbuserCreateDto param){
-        System.out.println("param : " + param);
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(tbuserService.create(param));
-    }
     @PutMapping("")
     public Map<String, Object> update(@RequestBody Map<String, Object> param){
         System.out.println(param);
         return tbuserService.update(param);
+    }
+    */
+    @PostMapping("")
+    public ResponseEntity<TbuserDto.TbuserAfterCreateDto> create(@RequestBody TbuserDto.TbuserCreateDto param){
+        System.out.println("param : " + param);
+        return ResponseEntity.status(HttpStatus.CREATED).body(tbuserService.create(param));
+    }
+    @PutMapping("")
+    public ResponseEntity<TbuserDto.TbuserAfterCreateDto> update(@RequestBody TbuserDto.TbuserUpdateDto param){
+        System.out.println(param);
+        return ResponseEntity.status(HttpStatus.OK).body(tbuserService.update(param));
     }
     @GetMapping("/get/{id}")
     public ResponseEntity<TbuserDto.TbuserSelectDto> detail(@PathVariable("id") String id){

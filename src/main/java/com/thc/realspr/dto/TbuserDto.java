@@ -36,7 +36,6 @@ public class TbuserDto {
 		}
 	}
 
-
 	@Schema
 	@Getter
 	@Setter
@@ -53,6 +52,29 @@ public class TbuserDto {
 	@Setter
 	@NoArgsConstructor
 	@AllArgsConstructor
+	public static class TbuserUpdateDto {
+		@Schema(description = "id", example="")
+		@NotNull
+		@NotEmpty
+		@Size(max=100)
+		private String id;
+
+		@Schema(description = "name", example="")
+		@Size(max=100)
+		private String name;
+		@Schema(description = "nick", example="")
+		@Size(max=100)
+		private String nick;
+		@Schema(description = "phone", example="")
+		@Size(max=100)
+		private String phone;
+	}
+
+	@Schema
+	@Getter
+	@Setter
+	@NoArgsConstructor
+	@AllArgsConstructor
 	public static class TbuserSelectDto {
 		@Schema(description = "id", example="")
 		private String id;
@@ -60,5 +82,9 @@ public class TbuserDto {
 		private String username;
 		@Schema(description = "name", example="")
 		private String name;
+		@Schema(description = "nick", example="")
+		private String nick;
+		@Schema(description = "phone", example="")
+		private String phone;
 	}
 }

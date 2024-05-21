@@ -60,9 +60,7 @@ public class Tbuser {
     }
 
     public TbuserDto.TbuserAfterCreateDto toTbuserAfterCreateDto() {
-        return TbuserDto.TbuserAfterCreateDto.builder()
-                .id(getId())
-                .build();
+        return TbuserDto.TbuserAfterCreateDto.builder().id(getId()).build();
         /*
         TbuserDto.TbuserAfterCreateDto a =  new TbuserDto.TbuserAfterCreateDto();
         a.setId(getId());

@@ -10,6 +10,9 @@
 회원정보 조회
 Id
 <input type="text" id="detail_id" />
+<br/>
+<br/>
+<br/>
 아이디
 <input type="text" id="detail_username" />
 이름
@@ -30,7 +33,14 @@ phone
                 //
             },
             success : function(data){
+                /*
                 alert(JSON.stringify(data));
+                alert(data.username);
+                */
+                $("#detail_username").val(data.username);
+                $("#detail_name").val(data.name);
+                $("#detail_nick").val(data.nick);
+                $("#detail_phone").val(data.phone);
             },
             error : function(request, status, error){
                 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
