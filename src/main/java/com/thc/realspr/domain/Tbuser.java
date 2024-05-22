@@ -59,8 +59,8 @@ public class Tbuser {
         this.deleted = "N";
     }
 
-    public TbuserDto.TbuserAfterCreateDto toTbuserAfterCreateDto() {
-        return TbuserDto.TbuserAfterCreateDto.builder().id(getId()).build();
+    public TbuserDto.CreateResDto toTbuserAfterCreateDto() {
+        return TbuserDto.CreateResDto.builder().id(getId()).build();
         /*
         TbuserDto.TbuserAfterCreateDto a =  new TbuserDto.TbuserAfterCreateDto();
         a.setId(getId());

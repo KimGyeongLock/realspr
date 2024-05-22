@@ -7,7 +7,9 @@ import com.thc.realspr.repository.TbuserRepository;
 import com.thc.realspr.service.TbuserService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -50,10 +52,10 @@ public class TbuserServiceImpl implements TbuserService {
         return returnMap;
     }
     */
-    public TbuserDto.TbuserAfterCreateDto create(TbuserDto.TbuserCreateDto param){
+    public TbuserDto.CreateResDto create(TbuserDto.CreateReqDto param){
         return tbuserRepository.save(param.toEntity()).toTbuserAfterCreateDto();
     }
-    public TbuserDto.TbuserAfterCreateDto update(TbuserDto.TbuserUpdateDto param){
+    public TbuserDto.CreateResDto update(TbuserDto.UpdateReqDto param){
         System.out.println(param);
         Tbuser tbuser = tbuserRepository.findById(param.getId()).orElseThrow(() -> new RuntimeException(""));
         if(param.getName() != null) {
@@ -82,10 +84,19 @@ public class TbuserServiceImpl implements TbuserService {
         return returnMap;
     }
     */
-    public TbuserDto.TbuserSelectDto get(String id){
+    public TbuserDto.SelectResDto get(String id){
         //System.out.println(id);
-        TbuserDto.TbuserSelectDto tbuserSelectDto = tbuserMapper.detail(id);
+        TbuserDto.SelectResDto selectDto = tbuserMapper.detail(id);
         //
-        return tbuserSelectDto;
+        return selectDto;
+    }
+    public List<TbuserDto.SelectResDto> list(TbuserDto.ListReqDto param){
+        System.out.println(param.getUsername());
+        List<TbuserDto.SelectResDto> list = tbuserMapper.list(param);
+        List<TbuserDto.SelectResDto> newlist = new ArrayList<>();
+        for(TbuserDto.SelectResDto tbuserSelectDto : list){
+            newlist.add(get(tbuserSelectDto.getId()));
+        }
+        return newlist;
     }
 }

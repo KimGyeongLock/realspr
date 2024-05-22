@@ -5,6 +5,6 @@ import com.thc.realspr.dto.TbuserDto;
 import java.util.List;
 
 public interface TbuserMapper {
-	TbuserDto.TbuserSelectDto detail(String id);
-	List<TbuserDto.TbuserSelectDto> list();
+	TbuserDto.SelectResDto detail(String id);
+	List<TbuserDto.SelectResDto> list(TbuserDto.ListReqDto param);
 }

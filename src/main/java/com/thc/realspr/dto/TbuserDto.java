@@ -17,7 +17,7 @@ public class TbuserDto {
 	@Setter
 	@NoArgsConstructor
 	@AllArgsConstructor
-	public static class TbuserCreateDto {
+	public static class CreateReqDto {
 		@Schema(description = "username", example="이메일 주소")
 		@NotNull
 		@Email
@@ -42,7 +42,7 @@ public class TbuserDto {
 	@NoArgsConstructor
 	@AllArgsConstructor
 	@Builder
-	public static class TbuserAfterCreateDto {
+	public static class CreateResDto {
 		@Schema(description = "id", example="length32textnumber")
 		private String id;
 	}
@@ -52,7 +52,7 @@ public class TbuserDto {
 	@Setter
 	@NoArgsConstructor
 	@AllArgsConstructor
-	public static class TbuserUpdateDto {
+	public static class UpdateReqDto {
 		@Schema(description = "id", example="")
 		@NotNull
 		@NotEmpty
@@ -75,7 +75,7 @@ public class TbuserDto {
 	@Setter
 	@NoArgsConstructor
 	@AllArgsConstructor
-	public static class TbuserSelectDto {
+	public static class SelectResDto {
 		@Schema(description = "id", example="")
 		private String id;
 		@Schema(description = "username", example="이메일 주소")
@@ -86,5 +86,26 @@ public class TbuserDto {
 		private String nick;
 		@Schema(description = "phone", example="")
 		private String phone;
+		@Schema(description = "createdAt", example="")
+		private String createdAt;
+		@Schema(description = "modifiedAt", example="")
+		private String modifiedAt;
 	}
+
+	@Schema
+	@Getter
+	@Setter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class ListReqDto {
+		@Schema(description = "username", example="이메일 주소")
+		private String username;
+		@Schema(description = "name", example="")
+		private String name;
+		@Schema(description = "nick", example="")
+		private String nick;
+		@Schema(description = "phone", example="")
+		private String phone;
+	}
+
 }
