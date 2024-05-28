@@ -1,0 +1,50 @@
+<!---->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+글 등록!!
+
+제목
+<input type="text" id="create_title" />
+구분
+<input type="text" id="create_cate" />
+사진
+<input type="text" id="create_mpic" />
+내용
+<input type="text" id="create_content" />
+<a href="javascript:create();">등록해줘요.</a>
+<script>
+
+    function create(){
+        $.ajax({
+            url : '/api/tbpost',
+            type : 'POST',
+            contentType:'application/json; charset=utf-8',
+            data: JSON.stringify({
+                'title' : $("#create_title").val(),
+                'cate' : $("#create_cate").val(),
+                'mpic' : $("#create_mpic").val(),
+                'content' : $("#create_content").val()
+            }),
+            beforeSend:function(){
+                //
+            },
+            success : function(data){
+                alert(JSON.stringify(data));
+            },
+            error : function(request, status, error){
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            },
+            complete:function(){
+                //
+            }
+        });
+    }
+</script>
+</body>
+</html>
