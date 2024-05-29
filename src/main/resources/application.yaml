@@ -42,3 +42,11 @@ springdoc:
   swagger-ui:
     operations-sorter: alpha
     tags-sorter: alpha
+
+aws:
+  s3:
+    bucket_name: jiksang-user-pub
+    read_s3_url: https://jiksang-user-pub.s3.ap-northeast-2.amazonaws.com/
+    project_folder_name: jiksang
+    access_key: 1
+    secret_key: 2

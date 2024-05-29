@@ -18,13 +18,29 @@ Id
 구분
 <input type="text" id="detail_cate" />
 사진
+<img id="img_mpic" />
 <input type="text" id="detail_mpic" />
+<a id="a_download_img" href="/download">사진 다운로드해보기!</a>
 내용
 <input type="text" id="detail_content" />
-<a href="javascript:detail();">조회해줘요.</a>
+<!--<a href="javascript:detail();">조회해줘요.</a>-->
 <a href="javascript:update();">수정해줘요.</a>
 <script>
-
+    $("#detail_id").val(getIdFromUrl(null));
+    detail();
+    function getIdFromUrl(obj){
+        let temp_url_with_idx = obj;
+        if(obj == null){
+            temp_url_with_idx = window.location.href;
+        }
+        let split_slash_temp_idx = temp_url_with_idx.split('/');
+        let temp_idx = split_slash_temp_idx[split_slash_temp_idx.length - 1];
+        let split_question_temp_idx = temp_idx.split('?');
+        if(split_question_temp_idx.length > 0){
+            temp_idx = split_question_temp_idx[0];
+        }
+        return temp_idx;
+    }
     function detail(){
         $.ajax({
             url : '/api/tbpost/get/' + $("#detail_id").val(),
@@ -38,7 +54,14 @@ Id
                 for (let eachKey of detailKeys){
                     //alert(eachKey);
                     $("#detail_" + eachKey).val(data[eachKey]);
+                    $("#img_" + eachKey).attr("src", data[eachKey]);
                 }
+
+                let aaa = data["mpic"];
+                let temphref = $("#a_download_img").attr("href");
+                temphref += aaa;
+                temphref = temphref.replaceAll("/uploadfile", "");
+                $("#a_download_img").attr("href", temphref);
             },
             error : function(request, status, error){
                 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);

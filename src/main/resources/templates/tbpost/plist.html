@@ -11,9 +11,13 @@
 <script id="list_info_tbpost" type="text/x-handlebars-template">
     {{#resultData_tbpost}}
     <div>
+
         {{createdAt}} / {{modifiedAt}}
-        {{title}} // {{cate}} // {{mpic}} // {{content}}
+    <a href="/tbpost/detail/{{id}}">{{title}}</a>//
+         // {{cate}} // {{mpic}} // {{content}}
+
     </div>
+
     {{/resultData_tbpost}}
 </script>
 <script type="text/javascript">
@@ -48,7 +52,9 @@
 <!--<input type="text" id="orderby" />-->
 
 <a href="javascript:plist();">조회해줘요.</a>
-
+현재 페이지 : <font class="font_callpage">-</font>
+맨뒤 페이지 : <font class="font_lastpage">-</font>
+총 글 등록수 : <font class="font_listsize">-</font>
 <div id="div_tbpost_list">
 
 </div>
@@ -71,10 +77,17 @@
                 //
             },
             success : function(data){
-                //alert(JSON.stringify(data));
+                alert(JSON.stringify(data));
                 let each_list = data.list;
                 $("#div_tbpost_list").html("");
                 $("#div_tbpost_list").append(list_info_tbpost_template({"resultData_tbpost":each_list}));
+
+                let detailKeys = Object.keys(data);
+                for (let eachKey of detailKeys){
+                    alert(eachKey);
+                    $(".font_" + eachKey).text(data[eachKey]);
+                }
+
                 /*
                 */
             },
