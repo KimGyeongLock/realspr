@@ -2,11 +2,11 @@ package com.thc.realspr.dto;
 
 import com.thc.realspr.domain.Tbpost;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.beans.BeanUtils;
 
 import java.util.List;
 
@@ -69,6 +69,7 @@ public class TbpostDto {
 		@NotEmpty
 		@Size(max=100)
 		private String id;
+
 		@Schema(description = "deleted", example="")
 		private String deleted;
 
@@ -91,7 +92,7 @@ public class TbpostDto {
 	@Setter
 	@NoArgsConstructor
 	@AllArgsConstructor
-	public static class SelectResDto extends CommonSelectDto{
+	public static class SelectResDto extends CommonDto.SelectResDto {
 		@Schema(description = "title", example="")
 		private String title;
 		@Schema(description = "cate", example="")
@@ -118,27 +119,35 @@ public class TbpostDto {
 	@Setter
 	@NoArgsConstructor
 	@AllArgsConstructor
-	public static class PagedListReqDto {
-		@Schema(description = "deleted", example="")
-		private String deleted;
+	public static class MoreListReqDto extends CommonDto.MoreListReqDto {
 		@Schema(description = "title", example="")
 		private String title;
 		@Schema(description = "cate", example="")
 		private String cate;
-
-		@Schema(description = "callpage=", example="")
-		private int callpage;
-		@Schema(description = "calllimit", example="")
-		private int calllimit;
-		@Schema(description = "perpage", example="")
-		private int perpage;
-		@Schema(description = "orderby", example="")
-		private String orderby;
-		@Schema(description = "orderway", example="")
-		private String orderway;
-
 	}
-
+	@Schema
+	@Getter
+	@Setter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class PagedListReqDto extends CommonDto.PagedListReqDto {
+		@Schema(description = "title", example="")
+		private String title;
+		@Schema(description = "cate", example="")
+		private String cate;
+	}
+	@Schema
+	@Getter
+	@Setter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	public static class PagedListServDto extends CommonDto.PagedListServDto {
+		@Schema(description = "title", example="")
+		private String title;
+		@Schema(description = "cate", example="")
+		private String cate;
+	}
+	/*
 	@Schema
 	@Getter
 	@Setter
@@ -156,8 +165,9 @@ public class TbpostDto {
 		private int listsize;
 
 		@Schema(description = "리스트", example="상세정보가 담긴 리스트")
-		private List<SelectResDto> list;
+		private List<SelectResResDto> list;
 
 	}
+	*/
 
 }

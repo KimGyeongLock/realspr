@@ -1,5 +1,6 @@
 package com.thc.realspr.service;
 
+import com.thc.realspr.dto.CommonDto;
 import com.thc.realspr.dto.TbpostDto;
 import org.springframework.stereotype.Service;
 
@@ -11,5 +12,6 @@ public interface TbpostService {
     public TbpostDto.CreateResDto update(TbpostDto.UpdateReqDto param);
     public TbpostDto.SelectResDto get(String id);
     public List<TbpostDto.SelectResDto> list(TbpostDto.ListReqDto param);
-    public TbpostDto.PagedListResDto pagedlist(TbpostDto.PagedListReqDto param);
+    public List<TbpostDto.SelectResDto> moreList(TbpostDto.MoreListReqDto param);
+    public CommonDto.PagedListResDto<TbpostDto.SelectResDto> pagedlist(TbpostDto.PagedListReqDto param);
 }

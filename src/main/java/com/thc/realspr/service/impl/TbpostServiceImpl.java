@@ -1,11 +1,13 @@
 package com.thc.realspr.service.impl;
 
 import com.thc.realspr.domain.Tbpost;
+import com.thc.realspr.dto.CommonDto;
 import com.thc.realspr.dto.TbpostDto;
 import com.thc.realspr.mapper.TbpostMapper;
 import com.thc.realspr.repository.TbpostRepository;
 import com.thc.realspr.service.TbpostService;
-import io.swagger.v3.oas.annotations.media.Schema;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,6 +15,8 @@ import java.util.List;
 
 @Service
 public class TbpostServiceImpl implements TbpostService {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final TbpostRepository tbpostRepository;
     private final TbpostMapper tbpostMapper;
@@ -50,17 +54,49 @@ public class TbpostServiceImpl implements TbpostService {
         //
         return selectDto;
     }
+
     public List<TbpostDto.SelectResDto> list(TbpostDto.ListReqDto param){
         List<TbpostDto.SelectResDto> list = tbpostMapper.list(param);
+        /*
         List<TbpostDto.SelectResDto> newlist = new ArrayList<>();
         for(TbpostDto.SelectResDto tbpostSelectDto : list){
             newlist.add(get(tbpostSelectDto.getId()));
-        }
-        return newlist;
+        }*/
+        return addListDetails(list);
     }
 
-    public TbpostDto.PagedListResDto pagedlist(TbpostDto.PagedListReqDto param){
-        TbpostDto.PagedListResDto returnDto = new TbpostDto.PagedListResDto();
+    public List<TbpostDto.SelectResDto> moreList(TbpostDto.MoreListReqDto param){
+        /*
+        param.afterBuild();
+        logger.info(param.getCursor());
+        List<TbpostDto.SelectResDto> list = tbpostMapper.moreList(param);
+        return addListDetails(list);
+         */
+        param.afterBuild();
+        logger.info(param.getCursor());
+        return addListDetails(tbpostMapper.moreList(param));
+    }
+
+    public CommonDto.PagedListResDto<TbpostDto.SelectResDto> pagedlist(TbpostDto.PagedListReqDto param){
+        CommonDto.PagedListResDto<TbpostDto.SelectResDto> returnDto = new CommonDto.PagedListResDto<>();
+        TbpostDto.PagedListServDto newParam = new TbpostDto.PagedListServDto();
+        newParam.afterBuild(tbpostMapper.pagedListCount(param), param);
+        return returnDto.afterBuild(addListDetails(tbpostMapper.pagedList(newParam)), newParam);
+
+        /*
+        CommonDto.PagedListResDto<TbpostDto.SelectResDto> returnDto = new CommonDto.PagedListResDto<>();
+        int count = tbpostMapper.pagedListCount(param);
+
+        TbpostDto.PagedListServDto newParam2 = new TbpostDto.PagedListServDto();
+        newParam2.afterBuild(count, param);
+
+        List<TbpostDto.SelectResDto> pagedlist = tbpostMapper.pagedList(newParam2);
+        pagedlist = addListDetails(pagedlist);
+
+        returnDto = returnDto.afterBuild(pagedlist, newParam2);
+        */
+
+        /* CommonDto.PagedListResDto<TbpostDto.SelectResDto> returnDto = new CommonDto.PagedListResDto<>();
         //총 갯수 알수 있습니다!
         int count = tbpostMapper.pagedListCount(param);
         System.out.println("count : " + count);
@@ -80,7 +116,8 @@ public class TbpostServiceImpl implements TbpostService {
         //param.setOrderby("created_at");
         //param.setOrderway("desc");
         param.setCallpage(callpage);
-        param.setCalllimit(calllimit);
+        param.calllimit(calllimit);
+
         List<TbpostDto.SelectResDto> pagedlist = tbpostMapper.pagedList(param);
         List<TbpostDto.SelectResDto> newlist = new ArrayList<>();
         for(TbpostDto.SelectResDto tbpostSelectDto : pagedlist){
@@ -95,6 +132,17 @@ public class TbpostServiceImpl implements TbpostService {
         returnDto.setList(newlist);
 
         return returnDto;
+        */
+
+    }
+
+
+    public List<TbpostDto.SelectResDto> addListDetails(List<TbpostDto.SelectResDto> a_list){
+        List<TbpostDto.SelectResDto> result_list = new ArrayList<>();
+        for(TbpostDto.SelectResDto a : a_list){
+            result_list.add(get(a.getId()));
+        }
+        return result_list;
     }
 
 }
